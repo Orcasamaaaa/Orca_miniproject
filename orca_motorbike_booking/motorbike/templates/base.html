@@ -1,0 +1,41 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% tailwind_css %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Orca Motorbike Booking{% endblock %}</title>
+    <link href="{% static 'css/dist/styles.css' %}" rel="stylesheet">
+</head>
+<body class="bg-purple-100 text-gray-900">
+    <header class="bg-purple-500 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold">Orca Motorbike Booking System</h1>
+            <nav class="space-x-4">
+                <a href="/" class="hover:underline">Home</a>
+                {% if user.is_authenticated %}
+                    <span>Welcome, {{ user.username }}</span>
+                    <form method="post" action="{% url 'logout' %}" class="inline">
+                        {% csrf_token %}
+                        <button type="submit" class="hover:underline bg-transparent text-white border-0 cursor-pointer">
+                            Logout
+                        </button>
+                    </form>
+                {% else %}
+                    <a href="/login/" class="hover:underline">Login</a>
+                    <a href="/register/" class="hover:underline">Register</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+    <main class="container mx-auto p-6">
+        {% block content %}
+        <!-- เนื้อหาแต่ละหน้าจะถูกแทรกตรงนี้ -->
+        {% endblock %}
+    </main>
+    <footer class="bg-purple-500 text-white text-center py-4">
+        <p>&copy; 2024 Orca Motorbike Booking System</p>
+    </footer>
+</body>
+</html>
